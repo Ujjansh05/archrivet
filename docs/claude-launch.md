@@ -4,7 +4,14 @@ ArchRivet's first public use case is a scoped review of backend design flows. Th
 
 ## Route 1: Claude Code plugin from GitHub
 
-This is the quickest public path for a solo builder. Release the tested Windows x64 rules-only ZIP, then let early users download and extract it. A user starts Claude Code with:
+This is the quickest public path for a solo builder. After the versioned release is public, Windows users with Claude Code 2.1.224 or newer can install from the repository marketplace:
+
+```powershell
+claude plugin marketplace add Ujjansh05/archrivet
+claude plugin install archrivet@archrivet-marketplace
+```
+
+Users can also download and extract the Windows x64 rules-only ZIP, then start Claude Code with:
 
 ```powershell
 claude --plugin-dir "C:\path\to\extracted\archrivet"
@@ -14,7 +21,7 @@ In Claude Code, ask:
 
 > Use ArchRivet to review this order flow. A request enters a queue; a worker writes the order, then acknowledges the message. The queue may redeliver after a crash. Tell me what detail is missing to know whether duplicates are prevented. Propose a safer design and use `preview_proposal` for the proposed design. Keep assumptions and production verification separate.
 
-The rules package runs locally and requires no ArchRivet account, GPU, model download, or always-on server. It is a Claude Code plugin, **not** a Claude web-chat connector. After the first tested release, a public marketplace manifest can point to its versioned archive so users can run `claude plugin marketplace add Ujjansh05/archrivet` and `claude plugin install archrivet@archrivet-marketplace`. See [packaging instructions](claude-code-plugin.md).
+The rules package runs locally and requires no ArchRivet account, GPU, model download, or always-on server. It is a Claude Code plugin, **not** a Claude web-chat connector. The marketplace manifest pins the release ZIP by SHA-256 and becomes installable only when that release is public. See [packaging instructions](claude-code-plugin.md).
 
 ## Route 2: Anthropic directory listing
 
