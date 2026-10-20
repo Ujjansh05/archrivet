@@ -1,0 +1,45 @@
+[
+  {
+    "title": "Product catalogue · first draft",
+    "description": "Scripted demo, step 1 of 3. A shopper requests a product and the API reads its price from the database. These components are proposals, not verified infrastructure.",
+    "nodes": [
+      {"id": "shopper", "label": "Shopper", "kind": "client", "detail": "Browses product pages.", "state": "proposed"},
+      {"id": "api", "label": "Product API", "kind": "service", "detail": "Returns product details and prices.", "state": "proposed"},
+      {"id": "db", "label": "Product database", "kind": "database", "detail": "Authoritative product and price records.", "state": "proposed"}
+    ],
+    "edges": [
+      {"id": "browse", "source": "shopper", "target": "api", "label": "View a product"},
+      {"id": "read", "source": "api", "target": "db", "label": "Read current price"}
+    ]
+  },
+  {
+    "title": "Product catalogue · add a cache",
+    "description": "Scripted demo, step 2 of 3. The design adds a cache to reduce repeated database reads. The outage age limit is still unknown; drawing a cache does not make prices fresh.",
+    "nodes": [
+      {"id": "shopper", "label": "Shopper", "kind": "client", "detail": "Browses product pages.", "state": "proposed"},
+      {"id": "api", "label": "Product API", "kind": "service", "detail": "Checks the cache before reading the database.", "state": "proposed"},
+      {"id": "cache", "label": "Price cache", "kind": "cache", "detail": "Missing detail: during an outage, how old may a cached price become?", "state": "unknown"},
+      {"id": "db", "label": "Product database", "kind": "database", "detail": "Authoritative product and price records.", "state": "proposed"}
+    ],
+    "edges": [
+      {"id": "browse", "source": "shopper", "target": "api", "label": "View a product"},
+      {"id": "lookup", "source": "api", "target": "cache", "label": "Look up price"},
+      {"id": "read", "source": "api", "target": "db", "label": "Read on cache miss"}
+    ]
+  },
+  {
+    "title": "Product catalogue · clarify the cache",
+    "description": "Scripted demo, step 3 of 3. A proposed four-second age limit is now explicit. ArchRivet's separate review still needs all relevant facts and implementation tests before making a scoped decision.",
+    "nodes": [
+      {"id": "shopper", "label": "Shopper", "kind": "client", "detail": "Browses product pages.", "state": "proposed"},
+      {"id": "api", "label": "Product API", "kind": "service", "detail": "Checks the cache before reading the database.", "state": "proposed"},
+      {"id": "cache", "label": "Price cache · 4 s limit", "kind": "cache", "detail": "Proposed rule: do not serve prices older than four seconds, including outages. Test source freshness and enforcement separately.", "state": "proposed"},
+      {"id": "db", "label": "Product database", "kind": "database", "detail": "Authoritative product and price records.", "state": "proposed"}
+    ],
+    "edges": [
+      {"id": "browse", "source": "shopper", "target": "api", "label": "View a product"},
+      {"id": "lookup", "source": "api", "target": "cache", "label": "Use only within age limit"},
+      {"id": "read", "source": "api", "target": "db", "label": "Read on cache miss"}
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "archrivet": {
+      "type": "stdio",
+      "command": "${PLUGIN_ROOT}/runtime/python.exe",
+      "args": ["-I", "-B", "${PLUGIN_ROOT}/launch.py"],
+      "cwd": "${PLUGIN_ROOT}"
+    }
+  }
+}

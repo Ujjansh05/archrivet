@@ -36,7 +36,7 @@ Issues = "https://github.com/Ujjansh05/archrivet/issues"
 where = ["src"]
 
 [tool.setuptools.package-data]
-arch_review = ["data/*.json", "data/*.jsonl"]
+arch_review = ["data/*.json", "data/*.jsonl", "viewer/*.html", "viewer/*.css", "viewer/*.js"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

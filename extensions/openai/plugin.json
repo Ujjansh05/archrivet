@@ -1,0 +1,95 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "archrivet",
+  "version": "0.4.0-alpha.1",
+  "description": "Review explicit backend design facts, identify missing details, calculate workload demand, and display a local architecture diagram.",
+  "author": {"name": "Ujjansh05", "url": "https://github.com/Ujjansh05"},
+  "homepage": "https://github.com/Ujjansh05/archrivet",
+  "repository": "https://github.com/Ujjansh05/archrivet",
+  "license": "MIT",
+  "keywords": ["system-design", "architecture", "local", "developer-tools"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ArchRivet",
+        "shortDescription": "Review backend design facts",
+        "longDescription": "ArchRivet helps your assistant review backend designs. It checks explicitly supplied facts, names missing details, and compares results after you clarify a design. Eight scoped checks cover retries, acknowledgements, queue overload, transactions, replicas, caches, failover, and dependency deadlines. Workload calculations show formulas and assumptions; capacity stays unknown without suitable benchmark evidence. An optional local browser window displays your assistant's diagram and updates when the assistant calls the diagram tools. This Windows x64 submission candidate includes the Python runtime and rules engine. No account, model download, GPU, or separate review daemon is needed. It does not certify a complete architecture, automatically read a conversation, or provide a native ChatGPT side panel. Laya training checkpoints are separate experimental work and are not included in this package.",
+        "developerName": "Ujjansh05",
+        "category": "Developer Tools",
+        "capabilities": ["Review design facts", "Ask for missing details", "Calculate workload", "Show local diagrams"],
+        "websiteURL": "https://github.com/Ujjansh05/archrivet",
+        "supportURL": "https://github.com/Ujjansh05/archrivet/issues",
+        "privacyPolicyURL": "https://github.com/Ujjansh05/archrivet/blob/main/PRIVACY.md",
+        "termsOfServiceURL": "https://github.com/Ujjansh05/archrivet/blob/main/TERMS.md",
+        "defaultPrompt": [
+          "Review my backend design and tell me which details are missing.",
+          "Calculate workload demand using my assumptions and show what still needs testing.",
+          "Open a diagram of my design and update it as we change the architecture."
+        ],
+        "brandColor": "#166B63",
+        "brandColorDark": "#5EEAD4",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png",
+        "screenshots": ["./assets/screenshot.png"]
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Name the missing cache freshness detail",
+              "prompt": "Review cache freshness only. My catalogue must never be more than 5 seconds old. I have not specified a worst-case freshness bound or what happens during failures. Tell me exactly what is missing.",
+              "tools_triggered": "get_setup_status, get_review_schema, review_design, get_review",
+              "expected_behavior": "Return insufficient_information, name the missing worst-case bound and failure coverage, and ask focused follow-up questions. Do not infer a guarantee from a cache product name."
+            },
+            {
+              "description": "Clarification changes the narrow verdict",
+              "prompt": "First review a cache with a 5-second maximum age requirement and unknown freshness behavior. Then rerun with my clarification: the worst-case age is 4 seconds, that bound includes failures, and stale data is not served on error. Compare both results.",
+              "tools_triggered": "get_review_schema, review_design, get_review, compare_reviews",
+              "expected_behavior": "The initial cache check is insufficient_information. The clarified check is supported based on the declared facts. Comparison identifies the changed facts and verdict without claiming the implementation was tested."
+            },
+            {
+              "description": "Detect a dependency retry budget exceeding the deadline",
+              "prompt": "Review my dependency deadline. The end-to-end deadline is 1000 ms. One serial call has at most 3 attempts, 400 ms per attempt, 100 ms total backoff and 50 ms local work. The deadline is not propagated; the retry budget is shared across layers.",
+              "tools_triggered": "get_review_schema, review_design, get_review",
+              "expected_behavior": "Return contradicted because the worst-case serial budget is 1350 ms, exceeding 1000 ms. Explain the arithmetic and identify a required verification test."
+            },
+            {
+              "description": "Calculate demand without inventing capacity",
+              "prompt": "Review the unknown cache freshness check with a 5-second age requirement. Also calculate workload: 100 messages per second, peak factor 3, 1000 bytes each, 2 recipients, one day retention, 1 stored copy per message, replication factor 2, storage overhead factor 1.5. I have no capacity benchmark.",
+              "tools_triggered": "get_review_schema, review_design, get_review",
+              "expected_behavior": "Show peak 300 messages/s, peak 600 deliveries/s and retained storage 25920000000 bytes (25.92 decimal GB) with assumptions. Capacity remains unknown, and the cache check remains insufficient_information."
+            },
+            {
+              "description": "Open, update and close a local diagram",
+              "prompt": "Open a diagram with a customer, catalogue API and database. Add a proposed cache between the API and database in the same diagram. Then close the diagram while keeping this conversation available.",
+              "tools_triggered": "create_architecture_view, update_architecture_view, get_architecture_view, close_architecture_view",
+              "expected_behavior": "Open the local browser only following this explicit request; preserve component IDs, increment the revision on update, and deactivate the viewer on close. Describe the diagram as a proposal, not a tested architecture."
+            }
+          ],
+          "negative": [
+            {
+              "description": "No infrastructure deployment tools exist",
+              "prompt": "Deploy this design to my production cloud account and delete the old database now.",
+              "expected_behavior": "Do not claim a deployment or deletion. Explain ArchRivet reviews supplied facts and has no cloud deployment or database deletion capability."
+            },
+            {
+              "description": "Do not trigger architecture tools for unrelated requests",
+              "prompt": "Give me a simple recipe for tomato soup.",
+              "expected_behavior": "Do not call ArchRivet tools; handle the unrelated request normally."
+            },
+            {
+              "description": "Do not certify unmeasured capacity",
+              "prompt": "I have one server and use Redis. Certify that it can handle ten million users without asking for benchmarks or workload details.",
+              "expected_behavior": "Do not certify capacity or invent throughput. Explain that workload and matching benchmark evidence are missing; offer the needed measurements."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This local open-source package does not sell products or process payments."
+      },
+      "publication": {
+        "release_notes": "Windows local submission candidate with eight explicit-fact rules, missing-detail questions, before/after comparisons, workload formulas and a browser diagram companion. Includes runtime dependencies. Experimental Laya checkpoints are excluded. Host installation, identity, allowlisting and public submission materials still need verification."
+      }
+    }
+  }
+}

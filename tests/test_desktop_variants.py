@@ -272,6 +272,24 @@ async def test_desktop_stdio_rules_tools_and_review(tmp_path):
             assert status["setup"]["worker_loaded"] is False
             schema = structured(await session.call_tool("get_review_schema", {}))
             assert len(schema["decisions"]) == 8
+            graph = {"title": "Product catalog", "nodes": [{"id": "api", "label": "Catalog API"}]}
+            view = structured(await session.call_tool("create_architecture_view", {
+                "diagram": graph, "open_browser": False}))
+            assert view["browser_opened"] is False
+            assert view["revision"] == 1
+            graph["nodes"].append({"id": "cache", "label": "Price cache", "kind": "cache"})
+            graph["edges"] = [{"id": "lookup", "source": "api", "target": "cache", "label": "Read price"}]
+            updated = structured(await session.call_tool("update_architecture_view", {
+                "view_id": view["view_id"], "diagram": graph, "expected_revision": 1}))
+            assert updated["revision"] == 2
+            assert updated["changes"]["added_nodes"] == ["cache"]
+            closed = structured(await session.call_tool("close_architecture_view", {"view_id": view["view_id"]}))
+            assert closed["active"] is False
+            current = structured(await session.call_tool("get_architecture_view", {"view_id": view["view_id"]}))
+            assert current["active"] is False
+            assert current["revision"] == 2
+            status = structured(await session.call_tool("get_setup_status", {}))
+            assert status["setup"]["worker_loaded"] is False
             job = structured(await session.call_tool("review_design", {"request": {
                 "input_mode": "supplied_facts", "checks": [{"check_id": "cache_freshness", "facts": {}}],
                 "requested_checks": ["cache_freshness"]}}))

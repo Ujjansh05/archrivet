@@ -1,0 +1,13 @@
+{
+  "name": "archrivet",
+  "version": "0.4.0-alpha.1",
+  "description": "Review backend architecture facts, missing details, risks, workload math, and diagrams through a local MCP server.",
+  "author": {
+    "name": "Ujjansh05",
+    "url": "https://github.com/Ujjansh05"
+  },
+  "homepage": "https://github.com/Ujjansh05/archrivet",
+  "repository": "https://github.com/Ujjansh05/archrivet",
+  "license": "MIT",
+  "keywords": ["system-design", "architecture", "mcp", "review"]
+}

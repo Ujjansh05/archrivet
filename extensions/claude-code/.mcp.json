@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "archrivet": {
+      "type": "stdio",
+      "command": "${CLAUDE_PLUGIN_ROOT}/runtime/python.exe",
+      "args": ["-I", "-B", "${CLAUDE_PLUGIN_ROOT}/launch.py"]
+    }
+  }
+}

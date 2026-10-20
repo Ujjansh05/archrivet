@@ -1,0 +1,253 @@
+{
+  "recorded_at": "2026-10-17T11:39:15.495974+00:00",
+  "runtime_build": "20260602",
+  "runtime_python": "3.12.13",
+  "runtime_platform": "windows-x86_64",
+  "sources": {
+    "openssl.txt": {
+      "url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.5.6/LICENSE.txt",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "bytes": 10175,
+      "copied_verbatim": true,
+      "source_sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "extraction": null
+    },
+    "openssl-copyright.txt": {
+      "url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.5.6/README.md",
+      "sha256": "7dbbda3b3b7594825162aff406751dea98fa379301d16fd3a03ee4a5f342003f",
+      "bytes": 150,
+      "copied_verbatim": true,
+      "source_sha256": "f68c351048c11bd8499b9d6ef8b283386d4544cc556fd2679a2ff2b1c50a378b",
+      "extraction": "Copyright section copied verbatim from the upstream README; full Apache terms are in openssl.txt."
+    },
+    "libffi.txt": {
+      "url": "https://raw.githubusercontent.com/python/cpython-source-deps/16fad4855b3d8c03b5910e405ff3a04395b39a98/LICENSE",
+      "sha256": "a61d06e8f7be57928e71e800eb9273b05cb8868c484108afe41e4305bb320dde",
+      "bytes": 1132,
+      "copied_verbatim": true,
+      "source_sha256": "a61d06e8f7be57928e71e800eb9273b05cb8868c484108afe41e4305bb320dde",
+      "extraction": null
+    },
+    "xz.txt": {
+      "url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.8.1/COPYING.0BSD",
+      "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+      "bytes": 607,
+      "copied_verbatim": true,
+      "source_sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+      "extraction": null
+    },
+    "xz-copying.txt": {
+      "url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.8.1/COPYING",
+      "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "bytes": 3119,
+      "copied_verbatim": true,
+      "source_sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "extraction": null
+    },
+    "sqlite.txt": {
+      "url": "https://raw.githubusercontent.com/astral-sh/python-build-standalone/20260602/LICENSE.sqlite.txt",
+      "sha256": "38bef3d28b24f145ea293bd3b6eb4b20396982abc8303128fb493986ea5bc719",
+      "bytes": 1481,
+      "copied_verbatim": true,
+      "source_sha256": "38bef3d28b24f145ea293bd3b6eb4b20396982abc8303128fb493986ea5bc719",
+      "extraction": null
+    },
+    "expat.txt": {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.13/Modules/expat/COPYING",
+      "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87",
+      "bytes": 1144,
+      "copied_verbatim": true,
+      "source_sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87",
+      "extraction": null
+    },
+    "mpdecimal.txt": {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.13/Modules/_decimal/libmpdec/mpdecimal.h",
+      "sha256": "b07528d8b1dbf1e2d2741052996f0876e23342ce2d30d0effa39c5457716c25a",
+      "bytes": 1359,
+      "copied_verbatim": true,
+      "source_sha256": "ea0b9c6b296c13aed6ecaa50b463e39a9c1bdc059b84f50507fd8247b2e660f9",
+      "extraction": "Entire initial license and copyright comment copied verbatim from mpdecimal.h."
+    },
+    "zlib.txt": {
+      "url": "https://raw.githubusercontent.com/madler/zlib/v1.3.1/LICENSE",
+      "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "bytes": 1002,
+      "copied_verbatim": true,
+      "source_sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "extraction": null
+    }
+  },
+  "references": {
+    "standalone_dependency_pins": {
+      "url": "https://raw.githubusercontent.com/astral-sh/python-build-standalone/20260602/pythonbuild/downloads.py",
+      "sha256": "6d9cc69c16c1de859a1f403f403753bfeeb7cf74d54896d1515fc8198a30f4fd",
+      "bytes": 20598
+    },
+    "standalone_windows_builder": {
+      "url": "https://raw.githubusercontent.com/astral-sh/python-build-standalone/20260602/cpython-windows/build.py",
+      "sha256": "0c6adeb323fd7fabc788c9cbe2d1b49ecbddacf9fca96c7ab89cad0fd4985308",
+      "bytes": 68137
+    },
+    "libffi_configure": {
+      "url": "https://raw.githubusercontent.com/python/cpython-source-deps/16fad4855b3d8c03b5910e405ff3a04395b39a98/configure.ac",
+      "sha256": "36d02f0ffdfab27bb88905e02cdd9f629b6c872e0af3a7427a8c41211d902d92",
+      "bytes": 13000
+    }
+  },
+  "fetch_failures": {},
+  "local_binary_sha256": {
+    "python.exe": "a0c734794b1a2707202eb1d1592b5e30a14fa06ad494c76a5d09d600b85ae957",
+    "python312.dll": "d79000e15009fb66473768a0e7afbc0b12e800527d4f44737bf15103818ebe33",
+    "LICENSE.txt": "886a0ead2d89030ee62dbff52b04e47ab91998341295bb9c56fb952b4e081c7a",
+    "DLLs/libffi-8.dll": "184036de1240e40b05549824548f36cd033ed76fd7b647329f26ba66c24642f0",
+    "DLLs/libcrypto-3-x64.dll": "da8ef63d8ecf777d0fafd5b1e33530112656be628666965abc788c678578eaf1",
+    "DLLs/libssl-3-x64.dll": "8ce17eae9567faf45425d8a357b2127c9ef50708a9407cf7610d8683a954ce9c",
+    "DLLs/_lzma.pyd": "84f84ef29785ac0eaff13f6326a68cf0d9b2ff2839960ef12168aa3e4a0aca46",
+    "DLLs/sqlite3.dll": "fd2f3afde770fe4d1d973637fe56453e94004da5652a32ebdeec960f28dcfdcc",
+    "DLLs/pyexpat.pyd": "cdeaa89f2643b923aa0b5be04e210ecf4be7bd202aab9abbbdfd1eacebded0c6",
+    "DLLs/_decimal.pyd": "c16fb740d39add7e8138e80e7c6ef73d6e56f022accb16359b56dc52ed3cd65e"
+  },
+  "standalone_dependency_pins": {
+    "cpython-3.12": {
+      "url": "https://www.python.org/ftp/python/3.12.13/Python-3.12.13.tar.xz",
+      "size": 20801708,
+      "sha256": "c08bc65a81971c1dd5783182826503369466c7e67374d1646519adf05207b684",
+      "version": "3.12.13",
+      "licenses": [
+        "Python-2.0",
+        "CNRI-Python"
+      ],
+      "license_file": "LICENSE.cpython.txt",
+      "python_tag": "cp312"
+    },
+    "openssl-3.5": {
+      "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.6/openssl-3.5.6.tar.gz",
+      "size": 53121812,
+      "sha256": "deae7c80cba99c4b4f940ecadb3c3338b13cb77418409238e57d7f31f2a3b736",
+      "version": "3.5.6",
+      "library_names": [
+        "crypto",
+        "ssl"
+      ],
+      "licenses": [
+        "Apache-2.0"
+      ],
+      "license_file": "LICENSE.openssl-3.txt"
+    },
+    "xz": {
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.8.1/xz-5.8.1.tar.gz",
+      "size": 2587189,
+      "sha256": "507825b599356c10dca1cd720c9d0d0c9d5400b9de300af00e4d1ea150795543",
+      "version": "5.8.1",
+      "library_names": [
+        "lzma"
+      ],
+      "licenses": [
+        "0BSD"
+      ],
+      "license_file": "LICENSE.liblzma.txt"
+    },
+    "libffi": {
+      "url": "https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz",
+      "size": 1391684,
+      "sha256": "b0dea9df23c863a7a50e825440f3ebffabd65df1497108e5d437747843895a4e",
+      "version": "3.4.6",
+      "library_names": [
+        "ffi"
+      ],
+      "licenses": [
+        "MIT"
+      ],
+      "license_file": "LICENSE.libffi.txt"
+    },
+    "sqlite": {
+      "url": "https://www.sqlite.org/2026/sqlite-autoconf-3530100.tar.gz",
+      "size": 3275272,
+      "sha256": "83e6b2020a034e9a7ad4a72feea59e1ad52f162e09cbd26735a3ffb98359fc4f",
+      "version": "3530100",
+      "actual_version": "3.53.1.0",
+      "library_names": [
+        "sqlite3"
+      ],
+      "licenses": [],
+      "license_file": "LICENSE.sqlite.txt",
+      "license_public_domain": true
+    },
+    "zlib": {
+      "url": "https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz",
+      "size": 1512791,
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+      "version": "1.3.1",
+      "library_names": [
+        "z"
+      ],
+      "licenses": [
+        "Zlib"
+      ],
+      "license_file": "LICENSE.zlib.txt"
+    },
+    "expat": {
+      "url": "https://github.com/libexpat/libexpat/releases/download/R_2_6_3/expat-2.6.3.tar.xz",
+      "size": 485600,
+      "sha256": "274db254a6979bde5aad404763a704956940e465843f2a9bd9ed7af22e2c0efc",
+      "version": "2.6.3",
+      "library_names": [
+        "expat"
+      ],
+      "licenses": [
+        "MIT"
+      ],
+      "license_file": "LICENSE.expat.txt"
+    },
+    "mpdecimal": {
+      "url": "https://astral-sh.github.io/mirror/files/mpdecimal-4.0.0.tar.gz",
+      "size": 315325,
+      "sha256": "942445c3245b22730fd41a67a7c5c231d11cb1b9936b9c0f76334fb7d0b4468c",
+      "version": "4.0.0",
+      "library_names": [
+        "mpdec"
+      ],
+      "licenses": [
+        "BSD-2-Clause"
+      ],
+      "license_file": "LICENSE.mpdecimal.txt"
+    }
+  },
+  "version_assessment": {
+    "openssl": {
+      "version": "3.5.6",
+      "basis": "DLL FileVersion and ProductVersion; standalone download pin"
+    },
+    "sqlite": {
+      "version": "3.53.1",
+      "basis": "DLL FileVersion/ProductVersion 3.53.1.0; standalone pin"
+    },
+    "libffi": {
+      "version": "3.4.2 (CPython Windows source dependency)",
+      "source_commit": "16fad4855b3d8c03b5910e405ff3a04395b39a98",
+      "basis": "Standalone Windows build_libffi checks out this CPython source-deps commit; configure.ac declares 3.4.2. The general libffi download pin 3.4.6 is NOT used for this Windows build.",
+      "binary_version_resource_present": false
+    },
+    "liblzma": {
+      "version": "5.8.1",
+      "basis": "Standalone Windows builder uses DOWNLOADS['xz']; _lzma.pyd FileVersion is the CPython version, not a liblzma version."
+    },
+    "expat": {
+      "version": "2.7.4",
+      "basis": "Observed pyexpat.EXPAT_VERSION; CPython vendored Modules/expat license. The general expat download pin is not the observed Windows library version."
+    },
+    "mpdecimal": {
+      "version": "2.5.1",
+      "basis": "Observed decimal.__libmpdec_version__; version macro and full license block in CPython v3.12.13 Modules/_decimal/libmpdec/mpdecimal.h. The general standalone mpdecimal 4.0.0 pin does not describe this Python 3.12 binary."
+    },
+    "zlib": {
+      "version": "1.3.1",
+      "basis": "Observed zlib.ZLIB_RUNTIME_VERSION; standalone zlib download pin."
+    }
+  },
+  "limits": [
+    "Local installed runtime was not independently matched against the upstream release archive hash; no archive was downloaded.",
+    "libffi and liblzma dependency versions are inferred from the matching BUILD recipe, not measured binary version resources.",
+    "This inventory preserves upstream notices and identifies provenance; it is not a legal certification or a full source-to-binary audit."
+  ]
+}
