@@ -14,9 +14,9 @@ claude --plugin-dir ".runtime\claude-code-candidate\archrivet"
 
 The builder verifies the source inventory before copying, writes a separate archive, and includes no private training files. The Claude MCP command points to the packaged `runtime/python.exe` and `launch.py`. Sign in with `claude auth login` if Claude Code reports that you are logged out. In the session, run `/archrivet:review-architecture` or use the [order-flow prompt](claude-launch.md). Use `/mcp` to inspect the `archrivet` connection. The local package and protocol checks do not prove that Claude selects tools correctly in a real conversation; a real Claude Code host test is still pending.
 
-## Publish after host testing
+## Early-access publication
 
-Upload the ZIP produced by `scripts/build_claude_plugin.py` as a versioned GitHub Release asset. Users can download, extract, and use `claude --plugin-dir <extracted-archrivet-directory>`. The repository now contains `.claude-plugin/marketplace.json`, which pins the archive and needs Claude Code 2.1.224 or newer. Validate it with a compatible CLI and publish the matching release ZIP before advertising installation. The entry uses this form:
+Upload the ZIP produced by `scripts/build_claude_plugin.py` as a versioned GitHub Release asset. Users can download, extract, and use `claude --plugin-dir <extracted-archrivet-directory>`. The repository now contains `.claude-plugin/marketplace.json`, which pins the archive and needs Claude Code 2.1.224 or newer. A live Claude Code conversation test is still pending account sign-in; label this release early access and collect reports of host behavior. Validate the marketplace with a compatible CLI when available. The entry uses this form:
 
 ```json
 {
