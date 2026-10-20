@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased — live architecture viewer
+
+- Add `preview_proposal` to local and Claude-test MCP servers. It checks assistant-authored revisions conditionally without promoting proposed facts into verified design facts.
+- Prepare a Windows x64 Claude Code rules plugin, a focused order-flow prompt, public launch guidance, and a redacted-design feedback form for early users.
+- Add a local browser flowchart with revision updates, change highlights, component details, pan/zoom, and SVG/JSON export.
+- Expose the same five viewer tools in CLI and desktop MCP, with session isolation and stale revision checks.
+- Keep viewer lifecycle independent of reviews and model loading; updates do not reopen a closed window.
+- Include a scripted walkthrough and host compatibility guide. Native embedded panels and remote ChatGPT web integration are not included in this preview.
+- Prepare a self-contained Windows OpenAI plugin candidate with a bundled Python runtime, Rules engine, dependency inventory, license notices and file hashes.
+- Declare accurate effects for all desktop tools and return actionable messages for expected revision, session and review-queue errors.
+- Add portable manifest checks, five positive and three negative review scenarios, policy drafts and clean-extraction protocol validation. Directory approval, real desktop installation and publication remain pending; no Laya checkpoint is promoted.
+
 ## 0.3.0a2 — fact verification and lighter installation
 
 - Withhold unverified machine-extracted facts before rules and Laya; retain proposed values, quotes and focused confirmation questions. Exact prose quotes establish provenance, not semantic support.

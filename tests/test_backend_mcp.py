@@ -96,7 +96,7 @@ async def test_v2_mcp_jobs_preserve_eight_checks_and_unprocessed_documents(backe
 
     async def review(request):
         parameters = StdioServerParameters(command=sys.executable, args=["-m", "arch_review", "mcp"],
-            env={"ARCH_REVIEW_HOME": runtime})
+            env={"ARCH_REVIEW_HOME": runtime, "PYTHONPATH": str(ROOT / "src")})
         async with stdio_client(parameters) as (reader, writer):
             async with ClientSession(reader, writer, read_timeout_seconds=30) as session:
                 await session.initialize()
@@ -144,7 +144,7 @@ async def test_guided_prompt_questions_and_comparison_over_real_mcp(backend_daem
             "checks": [{"check_id": "retry_safety", "scope_id": "save-message", "facts": facts,
                         "fact_origins": {p: "user_declared" for p in flatten(facts) if p in fact_fields("retry_safety")}}]}
     parameters = StdioServerParameters(command=sys.executable, args=["-m", "arch_review", "mcp"],
-                                       env={"ARCH_REVIEW_HOME": runtime})
+                                       env={"ARCH_REVIEW_HOME": runtime, "PYTHONPATH": str(ROOT / "src")})
     async with stdio_client(parameters) as (reader, writer):
         async with ClientSession(reader, writer, read_timeout_seconds=30) as session:
             await session.initialize()

@@ -1,2 +1,3 @@
 include README.md CHANGELOG.md LICENSE THIRD_PARTY_NOTICES.md
 recursive-include src/arch_review/data *.json *.jsonl
+recursive-include src/arch_review/viewer *.html *.css *.js

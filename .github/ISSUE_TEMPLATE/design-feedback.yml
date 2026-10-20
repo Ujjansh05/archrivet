@@ -1,0 +1,35 @@
+name: Design review feedback
+description: Report a useful result, incorrect verdict, or missing question from an ArchRivet review.
+title: "[Review feedback] "
+labels: [feedback]
+body:
+  - type: markdown
+    attributes:
+      value: "Please remove secrets, customer data, and private architecture details before posting."
+  - type: input
+    id: version
+    attributes:
+      label: ArchRivet version and host
+      placeholder: "0.4.0-alpha.1, Claude Code on Windows"
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Redacted design and requirement
+      description: Include enough detail to reproduce the review.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What answer did you expect, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What did ArchRivet return?
+      description: Include the verdict, missing detail, and whether this was a proposed-design preview.
+    validations:
+      required: true

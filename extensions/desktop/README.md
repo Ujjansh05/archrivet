@@ -1,6 +1,8 @@
 # ArchRivet desktop preview
 
-Choose **Rules** for the smallest installation: no Torch, Laya, model weights or GPU. The separate **Laya CPU** variant includes model dependencies and an optional experimental 322M model. Both use the same engine and eight MCP tools.
+Development checkout note: the live viewer requires rebuilding the engine wheel and desktop bundle together. The checked-in older vendor wheel and published v0.3.0a2 installers do not contain the new viewer. See [the preview guide](../../docs/live-diagram.md) for a working source-based walkthrough.
+
+Choose **Rules** for the smallest installation: no Torch, Laya, model weights or GPU. The separate **Laya CPU** variant includes model dependencies and an optional experimental 322M model. Both use the same engine and review tools. This source version also adds five tools for an optional live architecture diagram; published packages gain them when a new release is built.
 
 | Variant | Package | Dependencies |
 |---|---|---|
@@ -51,9 +53,19 @@ Then add: **During outages, prices can be 60 seconds old. Rerun and compare.** T
 
 ## Runtime boundaries
 
-The extension uses session-local stdio: no HTTP listener or detached daemon. Each host session may load its own worker; cross-host model sharing is not provided. Reviews have bounded queues and cancellation; idle workers release memory. Closing a session ends its jobs, while model files stay reusable.
+The extension uses session-local stdio. Reviews need no detached daemon. The optional diagram opens a private loopback listener only when requested. Each host session may load its own worker; cross-host model sharing is not provided. Reviews have bounded queues and cancellation; idle workers release memory. Closing a session ends its jobs and diagram listener, while model files stay reusable.
 
 ArchRivet sends no architecture text to a remote inference service; your assistant's provider/storage settings still apply. It reviews supplied facts and estimates demand, not deployed code or tested production capacity. Laya is experimental; confidence is not production failure probability.
+
+## Try the live diagram
+
+> Design a small online store. Open an ArchRivet architecture diagram beside our conversation, and update that same diagram whenever we change the design. Show which components are proposed and which details are unknown.
+
+Then ask: **Add a queue for sending order emails, and update the diagram.** The assistant calls `update_architecture_view` with the revised graph. You can close the browser tab and keep talking; updates do not reopen it. Ask to reopen the diagram when you want it again, or ask to close the view to deactivate it.
+
+The viewer needs no model or GPU. It displays the assistant's supplied graph, so updates happen when the assistant calls the tool. The picture does not prove that an architecture is correct or has tested capacity. Keep the private viewer URL within your session.
+
+This companion opens a browser on the computer running the MCP server. A local terminal or desktop assistant can use it if it supports these MCP tools. It is not an embedded panel in every host; a remote MCP server cannot open a window on your computer.
 
 ## Build both variants
 

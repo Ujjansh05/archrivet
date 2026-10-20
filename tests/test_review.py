@@ -51,6 +51,24 @@ def test_different_ack_boundary_is_not_a_durability_proof(complete):
     assert check_rules(complete)[1].verdict == Verdict.INSUFFICIENT
 
 
+def test_success_before_durable_commit_is_contradicted_even_with_mismatched_ack_name():
+    request = ReviewRequest(
+        requirements={"acknowledged_operation": "order durably stored", "survive_failures": ["host_loss"]},
+        design={"acknowledgement": {"acknowledged_operation": "enqueued in memory",
+                                    "after_durable_commit": False, "survives_failures": []}},
+    )
+    assert check_rules(request)[1].verdict == Verdict.CONTRADICTED
+
+
+def test_early_ack_without_failure_durability_requirement_is_not_a_violation():
+    request = ReviewRequest(
+        requirements={"acknowledged_operation": "enqueued in memory", "survive_failures": []},
+        design={"acknowledgement": {"acknowledged_operation": "enqueued in memory",
+                                    "after_durable_commit": False}},
+    )
+    assert check_rules(request)[1].verdict == Verdict.SUPPORTED
+
+
 def test_host_survival_does_not_imply_zone_survival(complete):
     complete.requirements.survive_failures.append("zone_loss")
     assert check_rules(complete)[1].verdict == Verdict.CONTRADICTED

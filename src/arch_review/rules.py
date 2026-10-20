@@ -73,13 +73,13 @@ def ack_durability(req: ReviewRequest) -> Finding:
         needed.append("design.acknowledgement.acknowledged_operation")
     if needed:
         return answer(Verdict.INSUFFICIENT, "The acknowledgement boundary and required failure model must be specified.", needed)
-    if r.acknowledged_operation != d.acknowledged_operation:
-        return answer(Verdict.INSUFFICIENT, "The design and requirement describe different acknowledgement boundaries.",
-                      ["A matching acknowledged operation in requirements and design."])
     if not r.survive_failures:
         return answer(Verdict.SUPPORTED, "The requirement explicitly imposes no post-acknowledgement failure durability.")
     if d.after_durable_commit is False:
         return answer(Verdict.CONTRADICTED, "Success is acknowledged before durable commit.")
+    if r.acknowledged_operation != d.acknowledged_operation:
+        return answer(Verdict.INSUFFICIENT, "The design and requirement describe different acknowledgement boundaries.",
+                      ["A matching acknowledged operation in requirements and design."])
     if d.survives_failures is not None and not set(r.survive_failures).issubset(d.survives_failures):
         return answer(Verdict.CONTRADICTED, "The stated durability guarantee does not cover every required failure domain.")
     needed = ["design.acknowledgement." + name for name in ("after_durable_commit", "survives_failures")

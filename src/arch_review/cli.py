@@ -50,6 +50,10 @@ def main():
     sub.add_parser("serve", help="Run the shared service in the foreground")
     sub.add_parser("stop")
     sub.add_parser("mcp")
+    viewer = sub.add_parser("viewer-demo", help="Open a live flowchart walkthrough; no model or training")
+    viewer.add_argument("--no-browser", action="store_true")
+    viewer.add_argument("--animate", action="store_true", help="Show two scripted revisions eight seconds apart")
+    viewer.add_argument("--duration", type=int, default=0, help="Stop after this many seconds; 0 waits for Ctrl+C")
     sub.add_parser("doctor")
     sub.add_parser("mcp-config")
     schema = sub.add_parser("schema")
@@ -99,7 +103,12 @@ def main():
     train.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     try:
-        if args.command == "preflight":
+        if args.command == "viewer-demo":
+            from .diagram_demo import run_demo
+            if args.duration < 0:
+                parser.error("--duration must be zero or positive")
+            run_demo(open_browser=not args.no_browser, animate=args.animate, duration=args.duration)
+        elif args.command == "preflight":
             from .preflight import inspect_hardware
             emit(inspect_hardware(args.workspace), args.output)
         elif args.command == "schema-v2":

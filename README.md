@@ -12,11 +12,11 @@
 Find missing details. Check backend risks. See what changes after a clarification.
 
 [![CI](https://github.com/Ujjansh05/archrivet/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Ujjansh05/archrivet/actions/workflows/ci.yml)
-[![Preview](https://img.shields.io/badge/release-experimental_preview-f4bc72)](https://github.com/Ujjansh05/archrivet/releases/tag/v0.3.0a2)
+[![Preview](https://img.shields.io/badge/release-Claude_Code_early_access-f4bc72)](https://github.com/Ujjansh05/archrivet/releases/tag/v0.4.0a1)
 [![Code license: MIT](https://img.shields.io/badge/code-MIT-65ead4)](LICENSE)
 [![Rules: no GPU required](https://img.shields.io/badge/rules-no_GPU_required-7ca5ff)](#try-it)
 
-**[Download](https://github.com/Ujjansh05/archrivet/releases/tag/v0.3.0a2) · [Quick start](#try-it) · [Demo](#one-question-changes-the-review) · [How it works](#how-it-works) · [Benchmarks](#measured-improvement)**
+**[Claude Code early access](https://github.com/Ujjansh05/archrivet/releases/tag/v0.4.0a1) · [Other downloads](https://github.com/Ujjansh05/archrivet/releases/tag/v0.3.0a2) · [Quick start](#try-it) · [Demo](#one-question-changes-the-review) · [Benchmarks](#measured-improvement)**
 
 </div>
 
@@ -28,9 +28,17 @@ ArchRivet is an open-source, local **MCP plugin for system-design reviews**. You
 
 Useful for product backends, payment flows, caches, notifications, and system-design discussions. Start with local rules; optionally enable the **322M Laya model**.
 
-**New in 0.3.0a2:** a lighter rules download, clearer model-loading status, and confirmation questions when the assistant's interpretation cannot be checked against the source. A matching quote alone never verifies its meaning. [What changed and how to verify it](docs/reliability-preview.md).
+**Best first use case:** review a backend flow before building it. For example, describe how an order enters a queue, when the API confirms it, and what a worker does before acknowledging it. ArchRivet checks whether the stated flow covers retries, durability, and overload. If a detail is missing, it asks for that detail. Your assistant can then propose a fix and call `preview_proposal` to see which checks the proposal *would* satisfy if its assumptions hold. The preview is conditional, not a deployment test.
+
+**Solo-builder early access:** you can try the rules-based plugin without assembling a team of reviewers. Please share a redacted design, expected result, and tool result through a [feedback issue](https://github.com/Ujjansh05/archrivet/issues/new/choose). Real-world feedback will guide the next checks; current synthetic benchmarks do not prove better design quality in every case. [Claude launch and installation options](docs/claude-launch.md).
+
+**Claude Code early access (0.4.0a1):** a rules-only local plugin with a conditional check of assistant-proposed fixes, a live diagram viewer, and a focused feedback form. The bundled MCP tools are tested; a real Claude Code conversation test is still pending. [Install and try an order-flow review](docs/claude-launch.md).
+
+**Previous release (0.3.0a2):** a lighter rules download, clearer model-loading status, and confirmation questions when the assistant's interpretation cannot be checked against the source. A matching quote alone never verifies its meaning. [What changed and how to verify it](docs/reliability-preview.md).
 
 ## One question changes the review
+
+**Development preview: live diagrams.** Open a flowchart beside your assistant, see components change as the AI updates its design, and close the viewer independently. This checkout adds the viewer; the published v0.3.0a2 download does not include it yet. [Try the walkthrough and see host compatibility](docs/live-diagram.md).
 
 > “Prices must be less than five seconds old. We serve cached prices during an outage.”
 
@@ -135,6 +143,7 @@ For complete local reviews of eight fixed checks, the current CPU measurements a
 | Codex on Windows x64 | [Download lightweight rules ZIP](https://github.com/Ujjansh05/archrivet/releases/download/v0.3.0a2/archrivet-windows-x64-rules-0.3.0-alpha.1.zip), extract, then follow the [one-time connection steps](docs/quick-start-preview.md). |
 | Desktop host supporting MCPB 0.4 with UV | [Download rules MCP extension](https://github.com/Ujjansh05/archrivet/releases/download/v0.3.0a2/archrivet-windows-x64-rules-0.3.0-alpha.1.mcpb) and install through the host's extension settings. |
 | Optional Laya CPU model | Choose the **laya-cpu** bundle from the [release downloads](https://github.com/Ujjansh05/archrivet/releases/tag/v0.3.0a2), replacing the rules installation. |
+| Claude Code on Windows x64 | [Install the 0.4.0a1 early-access plugin](docs/claude-launch.md). The rules package needs no GPU. |
 
 Start in **rules mode**: no Torch, Laya, model download or GPU is required. The separate Laya bundle uses CPU; the Python runtime also supports CUDA. Model weights are unchanged in this runtime update and remain a separate [release download](https://github.com/Ujjansh05/archrivet/releases/tag/v0.3.0a1).
 
@@ -166,5 +175,9 @@ Your assistant maps your description to these checks. ArchRivet does not indepen
 The assistant's prose interpretations require confirmation unless they match an explicit typed source declaration. Confirming a fact records your intended design; it does not verify deployed behavior.
 
 ArchRivet runs checks locally. Your AI assistant still follows its own provider and conversation-storage settings.
+
+OpenAI desktop submission preparation is tracked in the [submission checklist](docs/openai-submission.md).
+The local package is a candidate for testing; organization approval, a real desktop
+installation test and directory review remain pending.
 
 [Report a problem](https://github.com/Ujjansh05/archrivet/issues) with a small example and the result you expected. Original code: [MIT](LICENSE). Models and references retain their [licenses and attribution](THIRD_PARTY_NOTICES.md).

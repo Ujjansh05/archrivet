@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>ArchRivet · Live architecture</title>
+    <link rel="stylesheet" href="viewer.css">
+    <script src="viewer.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ArchRivet live architecture" id="brand-link">
+        <svg viewBox="0 0 36 36" aria-hidden="true"><path d="M7 28V13l11-6 11 6v15M7 20l11-6 11 6M18 14v15"/><circle cx="18" cy="7" r="3"/><circle cx="7" cy="28" r="3"/><circle cx="29" cy="28" r="3"/></svg>
+        <span>ArchRivet<span class="brand-subtitle">LIVE ARCHITECTURE</span></span>
+      </a>
+      <div class="connection" role="status" aria-live="polite"><span id="connection-dot" class="connection-dot waiting"></span><span id="connection-label">Connecting…</span></div>
+      <button id="close-view" class="button subtle">Close view</button>
+    </header>
+
+    <section class="design-heading" aria-labelledby="design-title">
+      <div><div class="eyebrow">YOUR DESIGN, AS IT EVOLVES</div><h1 id="design-title">Architecture canvas</h1><p id="design-description">The assistant can publish its design here as you work through it together.</p></div>
+      <div class="revision-card"><span class="revision-label">REVISION</span><strong id="revision-value">—</strong><span id="updated-at">Waiting for a design</span></div>
+    </section>
+
+    <main class="workspace" id="workspace">
+      <section class="canvas-panel" aria-label="Architecture diagram">
+        <div class="canvas-toolbar"><span class="canvas-label"><span class="small-square"></span>Design flow</span><div class="canvas-actions"><button id="zoom-out" class="icon-button" aria-label="Zoom out" title="Zoom out">−</button><output id="zoom-label" aria-label="Zoom level">100%</output><button id="zoom-in" class="icon-button" aria-label="Zoom in" title="Zoom in">+</button><span class="toolbar-divider"></span><button id="fit-view" class="button small">Fit</button><button id="download-svg" class="button small" disabled>Save SVG</button><button id="download-json" class="button small" disabled>Save JSON</button></div></div>
+        <div class="canvas-stage" id="canvas-stage">
+          <svg id="graph" role="group" aria-labelledby="graph-title graph-description" tabindex="0"><title id="graph-title">Architecture diagram</title><desc id="graph-description">Select a component to read its details. Drag the background to pan. Use the buttons to zoom.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9Z"/></marker></defs><g id="viewport"><g id="edges"></g><g id="nodes"></g></g></svg>
+          <div id="empty-state" class="canvas-message"><span class="empty-symbol">⌘</span><h2>Make the design visible</h2><p>Ask your assistant to show the architecture in ArchRivet. Components and connections will appear here.</p></div>
+          <div id="closed-state" class="canvas-message" hidden><span class="empty-symbol">Ⅱ</span><h2 id="closed-title">View closed</h2><p id="closed-message">The diagram is paused. Your assistant and architecture reviews can keep working.</p><button id="reopen-view" class="button primary">Reopen view</button></div>
+          <div id="offline-banner" class="offline-banner" role="status" hidden>Connection lost. Showing the last received design.</div>
+        </div>
+        <div class="canvas-footer"><span id="graph-counts">No components yet</span><span class="canvas-hint">Drag to pan · Scroll to zoom · Select a component</span></div>
+      </section>
+
+      <aside class="details-panel" aria-label="Design information">
+        <section class="detail-section"><div class="section-heading"><h2>Component details</h2><button id="clear-selection" class="text-button" hidden>Clear</button></div><div id="selection-empty" class="selection-empty"><span class="selection-icon">↖</span><p>Select a component in the diagram to see what it does.</p></div><div id="selection-content" hidden><span id="selection-kind" class="detail-kind"></span><h3 id="selection-label"></h3><span id="selection-state" class="state-pill"></span><p id="selection-detail" class="detail-description"></p><div class="detail-id">Component ID<span id="selection-id"></span></div><div id="selection-connections" class="selection-connections"></div></div></section>
+        <section class="detail-section changes-section"><div class="section-heading"><h2>Latest changes</h2><span id="change-count" class="count-pill">0</span></div><p id="changes-empty" class="muted">Changes will appear when the assistant sends a new revision.</p><ul id="changes-list" class="changes-list"></ul></section>
+        <section class="about-panel"><span class="about-icon">i</span><div><strong>A shared picture of the design</strong><p>This diagram shows what the AI publishes. It updates when the assistant sends a revision through ArchRivet.</p><p>“Proposed”, “existing”, and “unknown” describe components. They are not a verdict on safety or production readiness.</p></div></section>
+      </aside>
+    </main>
+    <footer class="page-footer"><span>LOCAL VIEWER<span class="footer-separator">/</span>No uploads by this viewer.</span><span>Close this tab any time. Your AI can keep working.</span></footer>
+  </body>
+</html>

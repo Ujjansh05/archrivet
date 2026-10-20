@@ -76,6 +76,10 @@
       "description": "Start a local review of explicitly supplied design facts."
     },
     {
+      "name": "preview_proposal",
+      "description": "Conditionally check proposed design facts without treating them as verified."
+    },
+    {
       "name": "get_review",
       "description": "Retrieve review findings, missing information and estimates."
     },
@@ -86,6 +90,26 @@
     {
       "name": "compare_reviews",
       "description": "Compare changed facts and findings, preserving unanswered questions."
+    },
+    {
+      "name": "create_architecture_view",
+      "description": "Create a live local architecture diagram; open a browser when requested."
+    },
+    {
+      "name": "update_architecture_view",
+      "description": "Update the existing diagram after a design change without reopening its window."
+    },
+    {
+      "name": "get_architecture_view",
+      "description": "Read the current diagram and revision in this assistant session."
+    },
+    {
+      "name": "open_architecture_view",
+      "description": "Reopen an existing architecture diagram when the user asks."
+    },
+    {
+      "name": "close_architecture_view",
+      "description": "Deactivate the diagram while keeping the conversation and reviews running."
     }
   ]
 }
