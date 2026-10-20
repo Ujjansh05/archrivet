@@ -1,0 +1,53 @@
+{
+  "kind": "designed_motion_from_checked_results",
+  "screen_recording": false,
+  "model_inference_used": false,
+  "timing_is_benchmark": false,
+  "fps": 10,
+  "queue_source": [
+    {
+      "input": "examples/flawed.json",
+      "sha256": "8b380b42ee84634c8efb6fc8d1dbe0e87aab45858fef64ac886205e87baaa75a",
+      "checks": {
+        "retry_safety": "contradicted",
+        "ack_durability": "contradicted",
+        "queue_overload": "contradicted"
+      },
+      "capacity": "unknown"
+    },
+    {
+      "input": "examples/complete.json",
+      "sha256": "c357bd9063b30be2d2fb78fc63383cadc9759a0d1c386021c663542fe83ab5de",
+      "checks": {
+        "retry_safety": "supported",
+        "ack_durability": "supported",
+        "queue_overload": "supported"
+      },
+      "capacity": "unknown"
+    }
+  ],
+  "cache_source": {
+    "source": "docs/demo-comparison.md",
+    "sha256": "e42ee4e7f9da673f256cd9080f7d3f9064da094ee9c1473abd21ded86acc2058",
+    "change": "stale_on_error_bound_ms: unknown -> 60000",
+    "verdict": "insufficient_information -> contradicted"
+  },
+  "files": {
+    "archrivet-product-walkthrough.gif": {
+      "bytes": 2992748,
+      "sha256": "8a4c3b3895d63c10c6b2c38ea8d6d74af53cf85083a551a28d9dcd6a1ad1a619"
+    },
+    "archrivet-product-walkthrough.png": {
+      "bytes": 48318,
+      "sha256": "10e65667b042d53383b257372cc578b63683309187470a2e91a03d00e516ffea"
+    },
+    "archrivet-missing-detail.gif": {
+      "bytes": 2076840,
+      "sha256": "b4eb94d470066aadae88f09b130eac0d038f93e554a6c66fc1d186986bb062d5"
+    },
+    "archrivet-missing-detail.png": {
+      "bytes": 51621,
+      "sha256": "2df9b27df45062a32bfdb8fa6c305403ec04a6d88d1fac69b442f6ef8bdc6787"
+    }
+  }
+}

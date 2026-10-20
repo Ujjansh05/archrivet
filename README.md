@@ -28,6 +28,15 @@ ArchRivet is an open-source, local **MCP plugin for system-design reviews**. You
 
 Useful for product backends, payment flows, caches, notifications, and system-design discussions. Start with local rules; optionally enable the **322M Laya model**.
 
+<div align="center">
+<picture>
+  <source media="(prefers-reduced-motion: reduce)" srcset="docs/assets/archrivet-product-walkthrough.png">
+  <img src="docs/assets/archrivet-product-walkthrough.gif" width="960" alt="An assistant drafts a queue-backed workflow; ArchRivet identifies three contradicted guarantees, then checks changed design facts while keeping capacity unknown.">
+</picture>
+</div>
+
+*A designed walkthrough of [two real rules-only CLI results](docs/assets/product-motion.json), shortened for viewing. The revised facts are proposals to implement and test; the animation is not a live screen recording or a speed measurement.*
+
 **Best first use case:** review a backend flow before building it. For example, describe how an order enters a queue, when the API confirms it, and what a worker does before acknowledging it. ArchRivet checks whether the stated flow covers retries, durability, and overload. If a detail is missing, it asks for that detail. Your assistant can then propose a fix and call `preview_proposal` to see which checks the proposal *would* satisfy if its assumptions hold. The preview is conditional, not a deployment test.
 
 **Solo-builder early access:** you can try the rules-based plugin without assembling a team of reviewers. Please share a redacted design, expected result, and tool result through a [feedback issue](https://github.com/Ujjansh05/archrivet/issues/new/choose). Real-world feedback will guide the next checks; current synthetic benchmarks do not prove better design quality in every case. [Claude launch and installation options](docs/claude-launch.md).
@@ -50,9 +59,21 @@ ArchRivet asks: **“During an outage, how old may a cached value become?”**
 | “Up to 60 seconds” | `contradicted` | This exceeds your five-second requirement. |
 | “Up to four seconds,” with the other declared bounds satisfied | `supported` | The supplied bounds satisfy this scoped check; verify them in the implementation. |
 
+<picture>
+  <source media="(prefers-reduced-motion: reduce)" srcset="docs/assets/archrivet-missing-detail.png">
+  <img src="docs/assets/archrivet-missing-detail.gif" width="960" alt="A five-second price freshness requirement remains unresolved until the outage age is stated; allowing 60 seconds changes the finding to contradicted.">
+</picture>
+
+*Illustrated from a [recorded rules-mode cache review](docs/demo-comparison.md); this is not a live recording.*
+
+<details>
+<summary><strong>Watch the original Codex walkthrough</strong></summary>
+
 ![Connect ArchRivet to Codex, review a price cache, and answer its missing-detail question.](docs/assets/archrivet-codex.gif)
 
 *Recorded with 0.3.0a1 in rules mode; timing is shortened. The newer version also asks you to confirm unresolved prose interpretations before using them. [Read the recorded example and answers](docs/demo-comparison.md).*
+
+</details>
 
 <details>
 <summary><strong>Compare Codex with and without the plugin</strong></summary>
@@ -65,12 +86,7 @@ Codex found the missing detail in both runs. ArchRivet adds a structured result,
 
 ## How it works
 
-<picture>
-  <source media="(prefers-reduced-motion: reduce)" srcset="docs/assets/archrivet-flow.png">
-  <img src="docs/assets/archrivet-flow.gif" width="960" height="585" alt="Animated review flow: your design goes to the AI assistant, through ArchRivet checks, into a missing-detail question, and back through review after clarification.">
-</picture>
-
-*Illustrated flow of the recorded rules-mode example; animation timing is not response time. [View the still diagram](docs/assets/archrivet-flow.png).*
+Your assistant proposes a design and sends its stated facts to ArchRivet. The plugin returns scoped findings and missing details; the assistant explains them and can submit a revision for another check. [See the detailed animated flow](docs/assets/archrivet-flow.gif) or [still diagram](docs/assets/archrivet-flow.png).
 
 <details>
 <summary><strong>See the full flow and the stage covered by the model benchmark</strong></summary>

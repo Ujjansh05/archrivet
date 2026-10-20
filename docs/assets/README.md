@@ -15,6 +15,15 @@ To rebuild the artwork, install Pillow 11.3.0 in an authoring environment and ru
 
 ## Product walkthrough
 
+The README now leads with two shorter motion pieces, each designed around one useful action:
+
+- [Queue workflow](archrivet-product-walkthrough.gif): start with a five-component flow, expose three contradicted requirements, revise the declared facts, then compare the scoped rule verdicts. The two underlying examples are checked against the CLI every time the animation is rebuilt.
+- [Missing cache detail](archrivet-missing-detail.gif): the review asks how old a price may become during a database outage. A recorded clarification permits 60 seconds against a five-second limit, changing the verdict from `insufficient_information` to `contradicted`.
+
+Both have [static posters](archrivet-product-walkthrough.png) and [here](archrivet-missing-detail.png) for reduced-motion viewers. [Source hashes and output metadata](product-motion.json) make the illustrations auditable. Motion timing is editorial, not measured tool response time. They are not live screen recordings, Laya demonstrations, or evidence that a proposed design works in production.
+
+Rebuild with `python scripts/render_product_motion.py` in the repository root using an authoring Python with Pillow. The script reads the current queue example CLI outputs and checks the recorded cache write-up before drawing; it fails if the represented verdicts change. It produces two GIFs, two posters and the metadata file.
+
 The [animated flowchart](archrivet-flow.gif) follows the recorded price-cache example through the assistant, local checks, missing-detail question, clarification and revised finding. The [still diagram](archrivet-flow.png) shows the whole cycle; the [frame preview](archrivet-flow-preview.png) shows four stages. It illustrates rules-mode behavior, not a live run, model accuracy or response timing. Optional Laya is identified separately and measured in the published benchmark. Rebuild with `python scripts/render_flowchart.py` using the same Pillow authoring environment as the icon.
 
 The [GIF](archrivet-demo.gif) is an animated summary of **actual rules-only CLI results**. It is a designed walkthrough, not a screen recording, a model-inference demonstration, or a performance benchmark. Wording and timing are adapted for readability. The [static preview](archrivet-demo.png) shows the first scene without motion.
