@@ -44,6 +44,7 @@ def error_text(result):
     return " ".join(block.text for block in result.content if block.type == "text")
 
 
+@pytest.mark.skipif(sys.platform != "win32", reason="Packaged stdio entry point supports Windows x64")
 async def test_stdio_stale_revision_and_session_errors_explain_recovery(tmp_path):
     parameters = StdioServerParameters(command=sys.executable, args=[str(DESKTOP / "main.py")], env={
         "ARCHRIVET_EXTENSION_HOME": str(tmp_path), "ARCHRIVET_ENABLE_LAYA": "false",
