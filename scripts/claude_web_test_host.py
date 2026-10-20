@@ -81,7 +81,8 @@ def create_app(bundle: Path, directory: Path, secret: str, backend_name="rules",
     from arch_review.backends import LayaBackend, NoModelBackend
     from arch_review.evidence_v2 import PersistentEvidence
     from arch_review.jobs import ReviewJobs
-    from arch_review.proposal import ProposalPreviewRequest, preview_proposal as calculate_proposal_preview
+    from arch_review.proposal import ProposalPreviewRequest
+    from arch_review.proposal import preview_proposal as calculate_proposal_preview
     from arch_review.registry import definitions
     from arch_review.review_v2 import DesignReviewer
     from arch_review.schema_v2 import DesignReviewRequest

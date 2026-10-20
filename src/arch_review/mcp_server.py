@@ -7,7 +7,8 @@ from . import __version__
 from .client import review_remote
 from .diagram import ViewerManager
 from .diagram_mcp import VIEWER_INSTRUCTIONS, register_diagram_tools
-from .proposal import ProposalPreviewRequest, preview_proposal as calculate_proposal_preview
+from .proposal import ProposalPreviewRequest
+from .proposal import preview_proposal as calculate_proposal_preview
 from .schema import Deployment, Design, Requirements, ReviewRequest, Workload
 from .schema_v2 import DesignReviewRequest
 
