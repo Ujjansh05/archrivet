@@ -18,7 +18,6 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "assets"
 W, H = 1200, 675
