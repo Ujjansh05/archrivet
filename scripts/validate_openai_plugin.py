@@ -176,12 +176,21 @@ async def validate(directory, schema_directory=None):
                 init = await session.initialize()
                 assert init.model_dump(by_alias=True)["serverInfo"]["version"] == report["package_version"]
                 tools = (await session.list_tools()).tools
-                assert len(tools) == 13
+                assert len(tools) == 14
+                assert "preview_proposal" in {tool.name for tool in tools}
                 for tool in tools:
                     assert tool.annotations is not None
                     for key in ("readOnlyHint", "destructiveHint", "idempotentHint", "openWorldHint"):
                         assert isinstance(tool.annotations.model_dump(by_alias=True)[key], bool)
                 report["tool_annotations"] = {tool.name: tool.annotations.model_dump(by_alias=True) for tool in tools}
+                preview = structured(await session.call_tool("preview_proposal", {"request": {
+                    "checks": [{"check_id": "cache_freshness", "scope_id": "catalogue",
+                                "facts": {"max_staleness_ms": 5000}}]}}))
+                assert preview["status"] == "hypothetical_preview"
+                assert preview["model_used"] is False and preview["deployment_verified"] is False
+                assert preview["checks"][0]["conditional_verdict"] == "insufficient_information"
+                report["proposal_preview"] = {"conditional_verdict": "insufficient_information",
+                                              "deployment_verified": False}
                 schema = structured(await session.call_tool("get_review_schema", {}))
                 assert len(schema["decisions"]) == 8
                 setup = structured(await session.call_tool("get_setup_status", {}))
