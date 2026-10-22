@@ -50,6 +50,8 @@ def main():
     sub.add_parser("serve", help="Run the shared service in the foreground")
     sub.add_parser("stop")
     sub.add_parser("mcp")
+    mcp_http = sub.add_parser("mcp-http", help="Serve Laya-backed MCP on loopback for an HTTPS reverse proxy")
+    mcp_http.add_argument("--port", type=int, default=8789)
     viewer = sub.add_parser("viewer-demo", help="Open a live flowchart walkthrough; no model or training")
     viewer.add_argument("--no-browser", action="store_true")
     viewer.add_argument("--animate", action="store_true", help="Show two scripted revisions eight seconds apart")
@@ -198,6 +200,11 @@ def main():
                     os.environ.pop("ARCH_REVIEW_MCP_SESSION", None)
                 else:
                     os.environ["ARCH_REVIEW_MCP_SESSION"] = previous
+        elif args.command == "mcp-http":
+            if not 1024 <= args.port <= 65535:
+                parser.error("--port must be between 1024 and 65535")
+            from .mcp_server import run_http
+            run_http(args.port)
         elif args.command == "doctor":
             import psutil
 

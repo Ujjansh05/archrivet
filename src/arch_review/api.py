@@ -70,6 +70,7 @@ def create_app(settings: Settings, token: str, service=None):
     async def health():
         return {"service": "architecture-review-plugin", "version": __version__, "pid": os.getpid(),
                 "model_worker_pid": review_service.worker.pid, "checkpoint": settings.checkpoint,
+                "backend": settings.backend,
                 "model_role": review_service.worker.metadata.get("role"),
                 "active_or_waiting": active_or_waiting + jobs.pending, "max_active": 1, "max_waiting": 4}
 
