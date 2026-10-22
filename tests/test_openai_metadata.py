@@ -35,6 +35,7 @@ def edit_manifest(package, edit):
 def test_valid_metadata_does_not_claim_portal_approval_or_schema_check(package):
     result = validator.validate_metadata(package)
     assert result["manifest"]["name"] == "archrivet"
+    assert result["review_test_cases_included"] is False
     assert result["portable_schema_validated"] is False
     assert result["openai_portal_validation_performed"] is False
     assert not result.get("submission_ready", False)
@@ -65,15 +66,37 @@ def test_oversized_listing_field_is_rejected(package, field, maximum):
         validator.validate_metadata(package)
 
 
+def add_review_cases(ext):
+    ext["review"]["test_cases"] = {
+        "positive": [{"description": "case", "prompt": "test", "tools_triggered": "tool",
+                      "expected_behavior": "result"} for _ in range(5)],
+        "negative": [{"description": "case", "prompt": "test"} for _ in range(3)],
+    }
+
+
+def test_review_cases_are_validated_if_present(package):
+    edit_manifest(package, add_review_cases)
+    result = validator.validate_metadata(package)
+    assert result["review_test_cases_included"] is True
+
+
 def test_missing_positive_case_is_rejected(package):
-    edit_manifest(package, lambda ext: ext["review"]["test_cases"]["positive"].pop())
-    with pytest.raises(ValueError, match="five positive"):
+    def edit(ext):
+        add_review_cases(ext)
+        ext["review"]["test_cases"]["positive"].pop()
+
+    edit_manifest(package, edit)
+    with pytest.raises(ValueError, match="exactly five"):
         validator.validate_metadata(package)
 
 
 @pytest.mark.parametrize("field", ["tools_triggered", "expected_behavior"])
 def test_positive_case_requires_tools_and_observable_result(package, field):
-    edit_manifest(package, lambda ext: ext["review"]["test_cases"]["positive"][0].pop(field))
+    def edit(ext):
+        add_review_cases(ext)
+        ext["review"]["test_cases"]["positive"][0].pop(field)
+
+    edit_manifest(package, edit)
     with pytest.raises(ValueError, match="Incomplete positive case"):
         validator.validate_metadata(package)
 

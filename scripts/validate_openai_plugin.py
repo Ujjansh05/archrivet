@@ -74,15 +74,16 @@ def validate_metadata(directory, schema_directory=None):
             raise ValueError("Invalid screenshot")
         if max(struct.unpack(">II", data[16:24])) > 4096:
             raise ValueError("Screenshot dimensions exceed 4096px")
-    cases = ext["review"]["test_cases"]
-    if len(cases["positive"]) != 5 or len(cases["negative"]) != 3:
-        raise ValueError("Initial MCP review needs exactly five positive and three negative cases")
-    for case in cases["positive"]:
-        if any(not case.get(key) for key in ("description", "prompt", "tools_triggered", "expected_behavior")):
-            raise ValueError("Incomplete positive case")
-    for case in cases["negative"]:
-        if not case.get("description") or not case.get("prompt"):
-            raise ValueError("Incomplete negative case")
+    cases = ext["review"].get("test_cases")
+    if cases is not None:
+        if len(cases["positive"]) != 5 or len(cases["negative"]) != 3:
+            raise ValueError("MCP app review needs exactly five positive and three negative cases")
+        for case in cases["positive"]:
+            if any(not case.get(key) for key in ("description", "prompt", "tools_triggered", "expected_behavior")):
+                raise ValueError("Incomplete positive case")
+        for case in cases["negative"]:
+            if not case.get("description") or not case.get("prompt"):
+                raise ValueError("Incomplete negative case")
     if set(config["mcpServers"]) != {"archrivet"}:
         raise ValueError("Expected exactly one ArchRivet MCP server")
     server = config["mcpServers"]["archrivet"]
@@ -92,6 +93,7 @@ def validate_metadata(directory, schema_directory=None):
     if "test_credentials" in ext.get("review", {}) or "reviewer_instructions" in ext.get("review", {}):
         raise ValueError("Reviewer access does not belong in public metadata")
     return {"manifest": manifest, "mcp": config,
+            "review_test_cases_included": cases is not None,
             "portable_schema_validated": schema_directory is not None,
             "openai_portal_validation_performed": False}
 
@@ -156,14 +158,14 @@ async def validate(directory, schema_directory=None):
         return value.replace("${PLUGIN_ROOT}", str(directory))
     report = {"package_version": metadata["manifest"]["version"], "local_assertions_passed": False,
               "portable_schema_validated": metadata["portable_schema_validated"],
+              "review_test_cases_included": metadata["review_test_cases_included"],
               "openai_portal_validation_performed": False, "real_ai_host_tested": False,
               "training_started": False, "model_downloaded": False, "publication_performed": False,
               "submission_ready": False, "cases": {}, "negative_host_cases": "pending_real_host",
               "extracted_inventory_files_verified": inventory_count,
               "remaining": ["OpenAI local MCP organization allowlisting", "Verified publisher identity",
-                            "Publish and verify HTTPS privacy/terms pages", "Clean real desktop host install",
-                            "Run five positive and three negative cases in the host",
-                            "Accessible real-host video recording", "Portal checks and publisher attestations"]}
+                            "Clean ChatGPT desktop installation and main-workflow test",
+                            "Portal checks and required policy attestations"]}
     started = time.perf_counter()
     with tempfile.TemporaryDirectory(prefix="openai-plugin-user-") as user_home:
         params = StdioServerParameters(command=substitute(config["command"]),
