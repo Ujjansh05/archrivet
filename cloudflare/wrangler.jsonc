@@ -5,5 +5,8 @@
   "compatibility_date": "2026-10-20",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
+  "ratelimits": [
+    { "name": "MCP_RATE_LIMITER", "namespace_id": "813741", "simple": { "limit": 60, "period": 60 } }
+  ],
   "observability": { "enabled": true }
 }

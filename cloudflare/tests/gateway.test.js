@@ -43,3 +43,20 @@ test("serves the exact OpenAI domain challenge", async () => {
     { ...env, OPENAI_DOMAIN_CHALLENGE: "verification-text" });
   assert.equal(await response.text(), "verification-text");
 });
+
+test("publishes remote-service privacy and terms pages", async () => {
+  for (const path of ["privacy", "terms"]) {
+    const response = await gateway.fetch(new Request(`https://archrivet.example/${path}`), {});
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("content-type"), /text\/html/);
+    assert.match(await response.text(), /Laya|architecture/);
+  }
+});
+
+test("returns 429 before forwarding when the preview rate limit is reached", async () => {
+  const response = await gateway.fetch(new Request("https://archrivet.example/mcp", {
+    method: "POST", body: "{}"
+  }), { ...env, MCP_RATE_LIMITER: { limit: async () => ({ success: false }) } });
+  assert.equal(response.status, 429);
+  assert.equal(response.headers.get("retry-after"), "60");
+});

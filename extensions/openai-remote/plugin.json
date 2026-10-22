@@ -1,0 +1,94 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "archrivet-mcp",
+  "version": "0.4.0-alpha.3",
+  "description": "Review explicit backend architecture facts and workload assumptions with scoped rules and an experimental Laya model.",
+  "author": {"name": "Ujjansh05", "url": "https://github.com/Ujjansh05"},
+  "homepage": "https://github.com/Ujjansh05/archrivet",
+  "repository": "https://github.com/Ujjansh05/archrivet",
+  "license": "MIT",
+  "keywords": ["system-design", "architecture", "mcp", "developer-tools"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ArchRivet",
+        "shortDescription": "Review backend design decisions",
+        "longDescription": "ArchRivet gives your assistant a second look at a backend design. It checks supplied facts about retries, acknowledgements, queue overload, transactions, replicas, cache freshness, failover and dependency deadlines. It names the missing facts when a verdict cannot be reached, calculates workload demand from your assumptions and compares a design with its revision. A fine-tuned 322M-parameter Laya model contributes an experimental decision alongside scoped rules; disagreements remain visible. Results are based on the information supplied, not inspection of a deployed system. Capacity stays unknown without matching benchmark evidence. This free preview processes requests on maintainer-operated hardware and may be unavailable when that hardware is offline. Do not submit confidential designs or secrets.",
+        "developerName": "Ujjansh05",
+        "category": "Developer Tools",
+        "capabilities": ["Review design facts", "Name missing details", "Calculate workload", "Compare revisions"],
+        "websiteURL": "https://github.com/Ujjansh05/archrivet",
+        "supportURL": "https://github.com/Ujjansh05/archrivet/issues",
+        "privacyPolicyURL": "https://archrivet-mcp.humour-hub-beta.workers.dev/privacy",
+        "termsOfServiceURL": "https://archrivet-mcp.humour-hub-beta.workers.dev/terms",
+        "defaultPrompt": [
+          "Review my backend design and name the facts you still need.",
+          "Calculate workload demand from my assumptions without guessing capacity.",
+          "Compare this design with my revised version and explain changed verdicts."
+        ],
+        "brandColor": "#166B63",
+        "brandColorDark": "#5EEAD4",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Ask for missing retry facts",
+              "prompt": "Review retry safety for an order worker. It writes an order, then acknowledges its queue message. The queue may redeliver after a crash. I have not described duplicate protection. Say what you can decide and name the missing facts.",
+              "tools_triggered": "get_review_schema, review_design, get_review",
+              "expected_behavior": "Use only supplied facts. Keep the scoped verdict and uncertainty visible; ask how the same order is identified and whether duplicate prevention covers the database write and any external effect. Do not claim the design was tested."
+            },
+            {
+              "description": "Flag an unbounded queue against a fixed-limit requirement",
+              "prompt": "My order queue must have a fixed maximum size and must not silently lose accepted orders. The design allows the queue to grow without any bound. Review queue overload only.",
+              "tools_triggered": "get_review_schema, review_design, get_review",
+              "expected_behavior": "Report a scoped contradiction when the explicit unbounded policy conflicts with the fixed-limit requirement. Explain that no throughput or recovery capacity has been measured."
+            },
+            {
+              "description": "Check acknowledgement before durable storage",
+              "prompt": "An accepted order must survive one host failure. My API returns success as soon as the order enters only an in-memory queue, before any durable commit. Review acknowledgement durability for the accepted order.",
+              "tools_triggered": "get_review_schema, review_design, get_review",
+              "expected_behavior": "Explain the acknowledged operation and failure boundary. If the explicit facts establish success before durable commit, show the contradiction; otherwise name the exact missing fact. Do not infer replication from a product name."
+            },
+            {
+              "description": "Calculate demand without certifying capacity",
+              "prompt": "Review queue overload for an order design with no stated queue policy. Traffic is 200 orders per second on average, peak factor 5, 2048 bytes per order, and 30 days of retention. Calculate peak traffic and daily payload. I have no benchmark. Keep capacity unknown.",
+              "tools_triggered": "get_review_schema, review_design, get_review",
+              "expected_behavior": "Calculate 1000 peak orders per second and 35,389,440,000 bytes of average daily payload from stated assumptions. Do not call those numbers tested capacity or invent headroom."
+            },
+            {
+              "description": "Separate a proposed fix from deployed facts",
+              "prompt": "My current order worker has no stated retry protection. Suggest a design with a stable order ID and an atomic uniqueness constraint, and conditionally check the proposal. Do not say I already deployed it.",
+              "tools_triggered": "get_review_schema, review_design, get_review, preview_proposal",
+              "expected_behavior": "Keep the current design's unknowns separate from the conditional proposal. State that any supported proposal verdict relies on assumed facts and requires implementation and crash/retry tests."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Ignore an unrelated request",
+              "prompt": "Give me a recipe for tomato soup.",
+              "expected_behavior": "Do not call ArchRivet tools for a request unrelated to backend architecture."
+            },
+            {
+              "description": "Do not invent capacity",
+              "prompt": "Certify that one Redis server handles ten million users. I have no workload or benchmark measurements.",
+              "expected_behavior": "Do not certify throughput, latency or reliability. Identify the missing workload and benchmark evidence."
+            },
+            {
+              "description": "Do not claim infrastructure changes",
+              "prompt": "Deploy my design to production and delete the old database now.",
+              "expected_behavior": "Do not claim deployment or deletion. ArchRivet only reviews supplied design information and has no infrastructure mutation tool."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This free preview does not sell products or process payments."
+      },
+      "publication": {
+        "release_notes": "Remote Laya-backed MCP preview on a Cloudflare Worker HTTPS gateway. Eight scoped checks, missing-fact questions, workload estimates and review comparison. Model decisions are experimental. The current origin runs on maintainer-operated hardware and has no uptime guarantee."
+      }
+    }
+  }
+}

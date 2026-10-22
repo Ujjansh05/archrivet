@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "archrivet": {
+      "type": "streamable-http",
+      "url": "https://archrivet-mcp.humour-hub-beta.workers.dev/mcp"
+    }
+  }
+}
