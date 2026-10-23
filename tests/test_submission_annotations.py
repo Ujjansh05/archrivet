@@ -18,6 +18,15 @@ DIAGRAM_HINTS = {
     "open_architecture_view": (False, False, False, False),
     "close_architecture_view": (False, True, False, False),
 }
+REMOTE_HINTS = {
+    "get_review_schema": (True, False, True, False),
+    "review_architecture": (True, False, True, False),
+    "review_design": (False, False, False, False),
+    "preview_proposal": (True, False, True, False),
+    "get_review": (True, False, True, False),
+    "cancel_review": (False, True, True, False),
+    "compare_reviews": (True, False, True, False),
+}
 
 
 @pytest.fixture
@@ -82,6 +91,11 @@ async def test_all_desktop_tools_declare_effects_for_the_actual_bundle(desktop_f
 async def test_shared_viewer_annotations_are_also_exposed_by_cli():
     tools = await create_cli_server().list_tools()
     assert {tool.name: hint_values(tool) for tool in tools if tool.name in DIAGRAM_HINTS} == DIAGRAM_HINTS
+
+
+async def test_remote_mcp_tools_declare_all_submission_hints():
+    tools = await create_cli_server(include_viewer=False).list_tools()
+    assert {tool.name: hint_values(tool) for tool in tools} == REMOTE_HINTS
 
 
 async def test_viewer_effects_match_write_replacement_and_retry_hints(desktop_factory, monkeypatch):
