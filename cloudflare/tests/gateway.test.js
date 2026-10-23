@@ -32,6 +32,33 @@ test("forwards MCP to the Laya host while replacing caller credentials", async (
   }
 });
 
+test("forwards modern MCP discovery and tool routing headers", async () => {
+  const previous = globalThis.fetch;
+  let forwarded;
+  globalThis.fetch = async (_url, options) => {
+    forwarded = options.headers;
+    return Response.json({ jsonrpc: "2.0", id: 1, result: { supportedVersions: ["2026-07-28"] } });
+  };
+  try {
+    const response = await gateway.fetch(new Request("https://archrivet.example/mcp", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json", "mcp-protocol-version": "2026-07-28",
+        "mcp-method": "server/discover", "mcp-name": "example",
+        "mcp-param-check": "retry_safety", authorization: "Bearer caller-token"
+      },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "server/discover" })
+    }), env);
+    assert.equal(response.status, 200);
+    assert.equal(forwarded.get("mcp-method"), "server/discover");
+    assert.equal(forwarded.get("mcp-name"), "example");
+    assert.equal(forwarded.get("mcp-param-check"), "retry_safety");
+    assert.equal(forwarded.get("authorization"), "Bearer test-secret-token");
+  } finally {
+    globalThis.fetch = previous;
+  }
+});
+
 test("does not accept an unencrypted model origin", async () => {
   const response = await gateway.fetch(new Request("https://archrivet.example/mcp", { method: "POST", body: "{}" }),
     { ...env, LAYA_ORIGIN_URL: "http://model.example.com/" });

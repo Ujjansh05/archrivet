@@ -1,7 +1,8 @@
 // The Worker is only an HTTPS gateway. Every architecture decision runs on the
 // separately hosted, fine-tuned Laya checkpoint.
 const FORWARDED_HEADERS = [
-  "accept", "content-type", "mcp-protocol-version", "mcp-session-id", "last-event-id"
+  "accept", "content-type", "mcp-protocol-version", "mcp-method", "mcp-name",
+  "mcp-session-id", "last-event-id"
 ];
 const RESPONSE_HEADERS = [
   "content-type", "mcp-session-id", "retry-after", "www-authenticate"
@@ -82,6 +83,9 @@ export default {
     for (const name of FORWARDED_HEADERS) {
       const value = request.headers.get(name);
       if (value !== null) headers.set(name, value);
+    }
+    for (const [name, value] of request.headers) {
+      if (name.startsWith("mcp-param-")) headers.set(name, value);
     }
     headers.set("authorization", `Bearer ${env.LAYA_ORIGIN_TOKEN}`);
     try {
